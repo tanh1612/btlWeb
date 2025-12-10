@@ -5,6 +5,6 @@
     "moduleResolution": "bundler",
     "target": "es6"
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "src/components/common/FeaturedProducts.jsx"],
   "exclude": ["node_modules"]
 }

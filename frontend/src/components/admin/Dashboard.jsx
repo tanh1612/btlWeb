@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import Layout from "../common/Layout";
-import { AdminAuthContext } from "../context/AdminAuth";
+import { AdminAuthContext } from "../../context";
 
 const Dashboard = () => {
   const { logout } = useContext(AdminAuthContext);

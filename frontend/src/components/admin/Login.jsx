@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
 import Layout from "../common/Layout";
-import { apiUrl } from "../common/http";
+import { apiUrl } from "../../config/api";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
-import { AdminAuthContext } from "../context/AdminAuth";
+import { AdminAuthContext } from "../../context";
 
 const Login = () => {
   const { login } = useContext(AdminAuthContext);

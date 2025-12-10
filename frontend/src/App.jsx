@@ -1,9 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./components/Home";
-import Shop from "./components/Shop";
-import Product from "./components/Product";
-import Cart from "./components/Cart";
-import Checkout from "./components/Checkout";
+import Home from "./pages/Home";
+import Shop from "./pages/Shop";
+import Product from "./pages/Product";
+import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
 import Login from "./components/admin/Login";
 import { ToastContainer } from "react-toastify";
 import Dashboard from "./components/admin/Dashboard";

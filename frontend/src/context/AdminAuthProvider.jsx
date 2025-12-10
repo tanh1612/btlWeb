@@ -1,6 +1,5 @@
-import { createContext, useState } from "react";
-
-export const AdminAuthContext = createContext();
+import { useState } from "react";
+import { AdminAuthContext } from "./AdminAuthContext";
 
 export const AdminAuthProvider = ({ children }) => {
   const adminInfo = localStorage.getItem("adminInfo");
