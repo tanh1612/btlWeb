@@ -22,7 +22,7 @@ const Header = () => {
                 <Nav.Link href="#action2">Woman</Nav.Link>
                 <Nav.Link href="#action2">Kids</Nav.Link>
               </Nav>
-              <div className="nav-right d-flex">
+              <div className="nav-right d-flex me-5">
                 <a href="" className="ms-3">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

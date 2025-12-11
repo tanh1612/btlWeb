@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
 import Layout from "../common/Layout";
-import { apiUrl } from "../../config/api";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AdminAuthContext } from "../../context";
+import { adminLogin } from "../../services/adminService";
 
 const Login = () => {
   const { login } = useContext(AdminAuthContext);
@@ -18,12 +18,8 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await fetch(`${apiUrl}/admin/login`, {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      const result = await response.json();
+      const result = await adminLogin(data);
+
       if (result.status == 200) {
         const adminInfo = {
           token: result.token,
