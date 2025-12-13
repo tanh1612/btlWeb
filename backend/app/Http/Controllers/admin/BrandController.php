@@ -15,7 +15,7 @@ class BrandController extends Controller
         return response()->json([
             'status' => 200,
             'data' => $brands
-        ]);
+        ], 200);
     }
 
     public function store(Request $request)
