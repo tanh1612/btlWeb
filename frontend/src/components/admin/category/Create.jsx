@@ -12,6 +12,7 @@ const Create = () => {
     const {
         register,
         handleSubmit,
+        watch,
         formState: { errors },
       } = useForm();
     const saveCategory = async (data) => {
