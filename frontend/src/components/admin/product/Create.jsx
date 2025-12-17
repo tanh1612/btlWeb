@@ -9,52 +9,53 @@ import JoditEditor from "jodit-react";
 
 const Create = ({ placeholder }) => {
   const editor = useRef(null);
-	const [content, setContent] = useState('');
-  const [disable, setDisable] = useState(false)
-  const [categories, setCategories] = useState([])
-  const [brands, setBrands] = useState([])
+  const [content, setContent] = useState("");
+  const [disable, setDisable] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [brands, setBrands] = useState([]);
   const navigate = useNavigate();
-	const config = useMemo(() => ({
-			readonly: false, // all options from https://xdsoft.net/jodit/docs/,
-			placeholder: placeholder || ''
-		}),
-		[placeholder]
-	);
-    
-    const {
-        register,
-        handleSubmit,
-        watch,
-        setError,
-        formState: { errors },
-      } = useForm();
-    const saveProduct = async (data) => {
-      const formData = {...data, "description" : content}
-      setDisable(true);
-      const res = await fetch(`${apiUrl}/products`,{
-          method: 'POST',
-          headers: {
-              'Content-type' : 'application/json',
-              'Accept' : 'application/json',
-              'Authorization' : `Bearer ${adminToken()}`
-          },
-          body: JSON.stringify(formData)
-      })
-      .then(res => res.json())
-      .then(result => {
-          setDisable(false);
-          if (result.status == 200){
-              toast.success(result.message);
-              navigate('/admin/products')
-          } else{
-            const formErrors = result.errors;
-            Object.keys(formErrors).forEach((field) => {
-              setError(field, {message: formErrors[field][0] });
-            })
-          }
+  const JoditWrapper = JoditEditor.default || JoditEditor;
+  const config = useMemo(
+    () => ({
+      readonly: false, // all options from https://xdsoft.net/jodit/docs/,
+      placeholder: placeholder || "",
+    }),
+    [placeholder]
+  );
 
-      })
-    }
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setError,
+    formState: { errors },
+  } = useForm();
+  const saveProduct = async (data) => {
+    const formData = { ...data, description: content };
+    setDisable(true);
+    const res = await fetch(`${apiUrl}/products`, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${adminToken()}`,
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        setDisable(false);
+        if (result.status == 200) {
+          toast.success(result.message);
+          navigate("/admin/products");
+        } else {
+          const formErrors = result.errors;
+          Object.keys(formErrors).forEach((field) => {
+            setError(field, { message: formErrors[field][0] });
+          });
+        }
+      });
+  };
 
   const fetchCategories = async () => {
     const res = await fetch(`${apiUrl}/categories`, {
@@ -71,20 +72,20 @@ const Create = ({ placeholder }) => {
       });
   };
 
-    const fetchBrands = async () => {
-      const res = await fetch(`${apiUrl}/brands`,{
-          method: 'GET',
-          headers: {
-              'Content-type' : 'application/json',
-              'Accept' : 'application/json',
-              'Authorization' : `Bearer ${adminToken()}`
-          }
-      })
-      .then(res => res.json())
-      .then(result => {
-          setBrands(result.data)
-      })
-    }
+  const fetchBrands = async () => {
+    const res = await fetch(`${apiUrl}/brands`, {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${adminToken()}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        setBrands(result.data);
+      });
+  };
 
   useEffect(() => {
     fetchCategories();
@@ -284,75 +285,76 @@ const Create = ({ placeholder }) => {
                     </div>
                   </div>
 
-                        <div className='row'>
-                          <div className='col-md-6'>
-                            <div className='mb-3'>
-                              <label htmlFor="" className='form-label'>QTY</label>
-                              <input
-                              {
-                                  ...register('qty')
-                              }  
-                              type="text" placeholder='Qty' className='form-control'/>
-                            </div>
-                          </div>
-                          <div className='col-md-6'>
-                            <div className='mb-3'>
-                              <label htmlFor="" className='form-label'>
-                                  Status
-                              </label>
-                              <select 
-                                {
-                                  ...register('status', {
-                                      required : 'Please select a status'
-                                  })
-                              }
-                              className={`form-control ${
-                              errors.status && "is-invalid"
-                              }`}
-                              >
-                                  <option value="">Select a Status</option>
-                                  <option value="1">Active</option>
-                                  <option value="0">Block</option>
-                              </select>
-                              {errors.status && (
-                                  <p className="invalid-feedback">
-                                  {errors.status?.message}
-                                  </p>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                        <div className='mb-3'>
-                          <label htmlFor="" className='form-label'>
-                              Featured
-                          </label>
-                          <select 
-                            {
-                              ...register('is_featured', {
-                                  required : 'Please select a status'
-                              })
-                          }
-                          className={`form-control ${
-                          errors.is_featured && "is-invalid"
-                          }`}
-                          >
-                              <option value="1">Yes</option>
-                              <option value="0">No</option>
-                          </select>
-                          {errors.is_featured && (
-                              <p className="invalid-feedback">
-                              {errors.is_featured?.message}
-                              </p>
-                          )}
-                        </div>
-                        <h3 className='py-3 border-bottom mb-3'>Gallery</h3>
-                        <div className='mb-3'>
-                          <label htmlFor="" className='form-label'>Image</label>
-                          <input type="file" className='form-control'/>
-                        </div>
+                  <div className="row">
+                    <div className="col-md-6">
+                      <div className="mb-3">
+                        <label htmlFor="" className="form-label">
+                          QTY
+                        </label>
+                        <input
+                          {...register("qty")}
+                          type="text"
+                          placeholder="Qty"
+                          className="form-control"
+                        />
+                      </div>
                     </div>
+                    <div className="col-md-6">
+                      <div className="mb-3">
+                        <label htmlFor="" className="form-label">
+                          Status
+                        </label>
+                        <select
+                          {...register("status", {
+                            required: "Please select a status",
+                          })}
+                          className={`form-control ${
+                            errors.status && "is-invalid"
+                          }`}
+                        >
+                          <option value="">Select a Status</option>
+                          <option value="1">Active</option>
+                          <option value="0">Block</option>
+                        </select>
+                        {errors.status && (
+                          <p className="invalid-feedback">
+                            {errors.status?.message}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="" className="form-label">
+                      Featured
+                    </label>
+                    <select
+                      {...register("is_featured", {
+                        required: "Please select a status",
+                      })}
+                      className={`form-control ${
+                        errors.is_featured && "is-invalid"
+                      }`}
+                    >
+                      <option value="1">Yes</option>
+                      <option value="0">No</option>
+                    </select>
+                    {errors.is_featured && (
+                      <p className="invalid-feedback">
+                        {errors.is_featured?.message}
+                      </p>
+                    )}
+                  </div>
+                  <h3 className="py-3 border-bottom mb-3">Gallery</h3>
+                  <div className="mb-3">
+                    <label htmlFor="" className="form-label">
+                      Image
+                    </label>
+                    <input type="file" className="form-control" />
+                  </div>
                 </div>
-                <button 
+              </div>
+              <button
                 disabled={disable}
                 type="submit"
                 className="btn btn-primary mt-3 mb-5"
