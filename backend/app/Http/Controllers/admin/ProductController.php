@@ -64,12 +64,12 @@ class ProductController extends Controller
                 $manager = new ImageManager(Driver::class);
                 $img = $manager->read(public_path('uploads/temp/' . $tempImage->name));
                 $img->scaleDown(1200);
-                $img->save(public_path('uploads/products/large' . $imageName));
+                $img->save(public_path('uploads/products/large/' . $imageName));
 
                 $manager = new ImageManager(Driver::class);
                 $img = $manager->read(public_path('uploads/temp/' . $tempImage->name));
                 $img->coverDown(400, 460);
-                $img->save(public_path('uploads/products/small' . $imageName));
+                $img->save(public_path('uploads/products/small/' . $imageName));
 
                 if ($key == 0) {
                     $product->image = $imageName;

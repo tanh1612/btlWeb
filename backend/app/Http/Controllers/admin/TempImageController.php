@@ -42,6 +42,6 @@ class TempImageController extends Controller
             'status' => 200,
             'message' => 'Image uploaded successfully.',
             'data' => $tempImage
-        ]);
+        ], 200);
     }
 }
