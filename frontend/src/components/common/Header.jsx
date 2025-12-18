@@ -1,15 +1,38 @@
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Logo from "../../assets/images/logo.png";
+import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { apiUrl } from "./http";
 
 const Header = () => {
+    const [categories, setCatefories] = useState([]);
+  const fetchCategories = () => {
+    fetch(`${apiUrl}/get-categories`, {
+      method: 'GET',
+      headers: {
+        'Content-type' : 'application/json',
+        'Accept' : 'application/json',
+      }
+    })
+    .then(res => res.json())
+    .then(result => {
+      if(result.status == 200) {
+        setCatefories(result.data)
+      } else {
+        console.log("Something went wrong");
+      }
+    })
+  }
+  useEffect(() => {
+    fetchCategories()
+  })
   return (
     <>
       <header className="shadow">
         <div className="bg-dark text-center py-3">
           <span className="text-white">Your fashion partner</span>
         </div>
-
         <div className="container-fluid">
           <Navbar expand="lg" className="">
             <Navbar.Brand href="/" className="ms-5">
@@ -18,9 +41,13 @@ const Header = () => {
             <Navbar.Toggle aria-controls="navbarScroll" />
             <Navbar.Collapse id="navbarScroll">
               <Nav className="ms-auto my-2 my-lg-0" navbarScroll>
-                <Nav.Link href="#action1">Men</Nav.Link>
-                <Nav.Link href="#action2">Woman</Nav.Link>
-                <Nav.Link href="#action2">Kids</Nav.Link>
+                {
+                  categories && categories.map(category => {
+                    return(
+                      <Nav.Link href={`/shop?category=${category.id}`}>{category.name}</Nav.Link>
+                    )
+                  })
+                }
               </Nav>
               <div className="nav-right d-flex me-5">
                 <a href="" className="ms-3">

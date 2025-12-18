@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ProductImg from "../../assets/images/eight.jpg";
 import { apiUrl } from "./http";
+import { Link } from "react-router-dom";
 
 const LatestProducts = () => {
 
@@ -9,8 +10,8 @@ const LatestProducts = () => {
   const latestProducts = async () => {
     await fetch(apiUrl+'/get-lastest-products',{
       method : 'GET',
-      header: {
-        'Conten-type' : 'application/json',
+      headers: {
+        'Content-type' : 'application/json',
         'Accept' : 'application/json',
       }
     })
@@ -35,10 +36,10 @@ const LatestProducts = () => {
                   <div className="col-md-3 col-6" key={`product-${product.id}`}>
                     <div className="product card border-0">
                       <div className="card-img">
-                        <img src={product.image_url} alt="" className="w-100" />
+                        <Link to={`/product/${product.id}`}><img src={product.image_url} alt="" className="w-100" /></Link>
                       </div>
                       <div className="card-body pt-3">
-                        <a href="">{product.title}</a>
+                        <Link to={`/product/${product.id}`}>{product.title}</Link>
                         <div className="price">
                           ${product.price} &nbsp;
                           {
