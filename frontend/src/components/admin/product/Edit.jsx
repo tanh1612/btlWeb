@@ -358,12 +358,12 @@ const Edit = ({ placeholder }) => {
                         <div className="col-md-6">
                           <div className="mb-3">
                             <label htmlFor="" className="form-label">
-                              Discouted Price
+                              Compare Price
                             </label>
                             <input
                               {...register("compare_price")}
                               type="text"
-                              placeholder="Discouted Price"
+                              placeholder="Compare Price"
                               className="form-control"
                             />
                           </div>
