@@ -7,28 +7,28 @@ import { apiUrl } from "./http";
 import { CartContext } from "../../context/Cart";
 
 const Header = () => {
-    const [categories, setCategories] = useState([]);
-    const {getQty} = useContext(CartContext);
+  const [categories, setCategories] = useState([]);
+  const { getQty } = useContext(CartContext);
   const fetchCategories = () => {
     fetch(`${apiUrl}/get-categories`, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-type' : 'application/json',
-        'Accept' : 'application/json',
-      }
+        "Content-type": "application/json",
+        Accept: "application/json",
+      },
     })
-    .then(res => res.json())
-    .then(result => {
-      if(result.status == 200) {
-        setCategories(result.data)
-      } else {
-        console.log("Something went wrong");
-      }
-    })
-  }
+      .then((res) => res.json())
+      .then((result) => {
+        if (result.status == 200) {
+          setCategories(result.data);
+        } else {
+          console.log("Something went wrong");
+        }
+      });
+  };
   useEffect(() => {
-    fetchCategories()
-  }, [])
+    fetchCategories();
+  }, []);
   return (
     <>
       <header className="shadow">
@@ -43,13 +43,17 @@ const Header = () => {
             <Navbar.Toggle aria-controls="navbarScroll" />
             <Navbar.Collapse id="navbarScroll">
               <Nav className="ms-auto my-2 my-lg-0" navbarScroll>
-                {
-                  categories && categories.map(category => {
-                    return(
-                      <Nav.Link key={`cat-${category.id}`} href={`/shop?category=${category.id}`}>{category.name}</Nav.Link>
-                    )
-                  })
-                }
+                {categories &&
+                  categories.map((category) => {
+                    return (
+                      <Nav.Link
+                        key={`cat-${category.id}`}
+                        href={`/shop?category=${category.id}`}
+                      >
+                        {category.name}
+                      </Nav.Link>
+                    );
+                  })}
               </Nav>
               <div className="nav-right d-flex">
                 <a href="" className="ms-3">
@@ -64,8 +68,8 @@ const Header = () => {
                     <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"></path>
                   </svg>
                 </a>
-                <a href="" className="ms-3 cart-bucket">
-                  <span>{ getQty() }</span>
+                <a href="" className="ms-3 cart-bucket me-5">
+                  <span>{getQty()}</span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
