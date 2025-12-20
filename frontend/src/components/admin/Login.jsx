@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AdminAuthContext } from "../../context";
 import { adminLogin } from "../../services/adminService";
+import { apiUrl } from "../common/http";
 
 const Login = () => {
   const { login } = useContext(AdminAuthContext);
@@ -17,31 +18,36 @@ const Login = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
-    try {
-      const result = await adminLogin(data);
-
-      if (result.status == 200) {
-        const adminInfo = {
-          token: result.token,
-          id: result.id,
-          name: result.name
-        };
-        localStorage.setItem("adminInfo", JSON.stringify(adminInfo));
-        login(adminInfo);
-        navigate("/admin/dashboard");
+    console.log(data)
+    const res = await fetch(`${apiUrl}/admin/login`,{
+      method: 'POST',
+      headers: {
+          'Content-type' : 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(result =>{
+      console.log(result)
+      if (result.status == 200){
+          const adminInfo = {
+              token: result.token,
+              id: result.id,
+              name: result.name
+          }
+          localStorage.setItem('adminInfo', JSON.stringify(adminInfo))
+          login(adminInfo)
+          navigate('/admin/dashboard')
       } else {
-        toast.error(result.message);
+          toast.error(result.message)
       }
-    } catch (error) {
-      console.log(error);
-      toast.error("Unable to connect to server!");
-    }
+    })
   };
 
   return (
     <>
       <Layout>
-        <div className="container-md d-flex justify-content-center py-5">
+        <div className="containerd-flex justify-content-center py-5">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="card shadow border-0 login">
               <div className="card-body p-4">

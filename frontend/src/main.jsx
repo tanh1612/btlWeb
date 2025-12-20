@@ -5,13 +5,16 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/css/style.scss";
 import { AdminAuthProvider } from "./context/index.jsx";
 import { CartProvider } from "./context/Cart.jsx";
+import { AuthProvider } from "./context/Auth.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AdminAuthProvider>
-      <CartProvider>
-      <App />
-      </CartProvider>
+      <AuthProvider>
+        <CartProvider>
+          <App />
+        </CartProvider>
+      </AuthProvider>
     </AdminAuthProvider>
   </StrictMode>
 );

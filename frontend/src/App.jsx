@@ -20,27 +20,42 @@ import {default as EditBrand}  from "./components/admin/brand/Edit";
 import {default as ShowProducts} from "./components/admin/product/Show";
 import {default as CreateProduct} from "./components/admin/product/Create";
 import {default as EditProduct}  from "./components/admin/product/Edit";
+import Register from "./pages/Register";
+import {default as UserLogin} from "./pages/Login";
+import Profile from "./pages/Profile";
+import { RequireAuth } from "./pages/RequireAuth";
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
+          {/* Cac tuyen duong cho User */}
           <Route path="/" element={<Home />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/product/:id" element={<Product />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
-
+          <Route path="/account/register" element={<Register />} />
+          <Route path="/account/login" element={<UserLogin />} />
           <Route path="/admin/login" element={<Login />} />
+
+          <Route
+            path="/account"
+            element={
+              <RequireAuth>
+                <Profile />
+              </RequireAuth>
+            }/>
+
+          {/* Cac tuyen duong cho Admin */}
           <Route
             path="/admin/dashboard"
             element={
               <AdminRequireAuth>
                 <Dashboard />
               </AdminRequireAuth>
-            }
-          />
+            }/>
           <Route
             path="/admin/categories"
             element={
@@ -56,7 +71,7 @@ function App() {
               </AdminRequireAuth>
             }/>
             <Route
-            path="/admin/categories/adit/:id"
+            path="/admin/categories/edit/:id"
             element={
               <AdminRequireAuth>
                 <EditCategory />
