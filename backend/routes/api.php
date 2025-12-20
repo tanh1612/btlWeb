@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 Route::post('/admin/login', [AuthController::class, 'authenticate']);
 Route::get('get-latest-products', [FrontProductController::class, 'latestProducts']);
 Route::get('get-featured-products', [FrontProductController::class, 'latestProducts']);
+Route::get('get-categories', [FrontProductController::class, 'getCategories']);
+Route::get('get-brands', [FrontProductController::class, 'getBrands']);
+Route::get('get-products', [FrontProductController::class, 'getProducts']);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('categories', CategoryController::class);
