@@ -24,6 +24,7 @@ import Register from "./pages/Register";
 import {default as UserLogin} from "./pages/Login";
 import Profile from "./pages/Profile";
 import { RequireAuth } from "./pages/RequireAuth";
+import Confirmation from "./pages/Confirmation";
 
 function App() {
   return (
@@ -35,7 +36,7 @@ function App() {
           <Route path="/shop" element={<Shop />} />
           <Route path="/product/:id" element={<Product />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/checkout" element={<Checkout />} />
+          {/* <Route path="/checkout" element={<Checkout />} /> */}
           <Route path="/account/register" element={<Register />} />
           <Route path="/account/login" element={<UserLogin />} />
           <Route path="/admin/login" element={<Login />} />
@@ -45,6 +46,22 @@ function App() {
             element={
               <RequireAuth>
                 <Profile />
+              </RequireAuth>
+            }/>
+          
+          <Route
+            path="/checkout"
+            element={
+              <RequireAuth>
+                <Checkout />
+              </RequireAuth>
+            }/>
+
+            <Route
+            path="/order/confirmation/:id"
+            element={
+              <RequireAuth>
+                <Confirmation />
               </RequireAuth>
             }/>
 
