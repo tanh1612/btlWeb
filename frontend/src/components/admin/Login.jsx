@@ -18,30 +18,30 @@ const Login = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
-    console.log(data)
-    const res = await fetch(`${apiUrl}/admin/login`,{
-      method: 'POST',
+    console.log(data);
+    const res = await fetch(`${apiUrl}/admin/login`, {
+      method: "POST",
       headers: {
-          'Content-type' : 'application/json'
+        "Content-type": "application/json",
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     })
-    .then(res => res.json())
-    .then(result =>{
-      console.log(result)
-      if (result.status == 200){
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+        if (result.status == 200) {
           const adminInfo = {
-              token: result.token,
-              id: result.id,
-              name: result.name
-          }
-          localStorage.setItem('adminInfo', JSON.stringify(adminInfo))
-          login(adminInfo)
-          navigate('/admin/dashboard')
-      } else {
-          toast.error(result.message)
-      }
-    })
+            token: result.token,
+            id: result.id,
+            name: result.name,
+          };
+          localStorage.setItem("adminInfo", JSON.stringify(adminInfo));
+          login(adminInfo);
+          navigate("/admin/dashboard");
+        } else {
+          toast.error(result.message);
+        }
+      });
   };
 
   return (
