@@ -2,7 +2,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Logo from "../../assets/images/logo.png";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { apiUrl } from "./http";
 
 const Header = () => {
@@ -44,7 +44,7 @@ const Header = () => {
                 {
                   categories && categories.map(category => {
                     return(
-                      <Nav.Link href={`/shop?category=${category.id}`}>{category.name}</Nav.Link>
+                      <Nav.Link key={`cat-${category.id}`} href={`/shop?category=${category.id}`}>{category.name}</Nav.Link>
                     )
                   })
                 }
