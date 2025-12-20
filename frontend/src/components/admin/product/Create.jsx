@@ -30,30 +30,28 @@ const Create = ({ placeholder }) => {
   const {
     register,
     handleSubmit,
-    watch,
     setError,
     formState: { errors },
   } = useForm();
 
-   const fetchSizes = async () => {
-      const res = await fetch(`${apiUrl}/sizes`, {
-        method: "GET",
-        headers: {
-          "Content-type": "application/json",
-          Accept: "application/json",
-          Authorization: `Bearer ${adminToken()}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((result) => {
-          console.log(result)
-          setSizes(result.data);
-        });
-    };
-  
+  const fetchSizes = async () => {
+    const res = await fetch(`${apiUrl}/sizes`, {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${adminToken()}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+        setSizes(result.data);
+      });
+  };
 
   const saveProduct = async (data) => {
-    const formData = { ...data, "description": content, "gallery": gallery  };
+    const formData = { ...data, description: content, gallery: gallery };
     setDisable(true);
     const res = await fetch(`${apiUrl}/products`, {
       method: "POST",
@@ -112,33 +110,32 @@ const Create = ({ placeholder }) => {
   const handleFile = async (e) => {
     const formData = new FormData();
     const file = e.target.files[0];
-    formData.append("image",file);
-    setDisable(true)
+    formData.append("image", file);
+    setDisable(true);
     const res = await fetch(`${apiUrl}/temp-images`, {
       method: "POST",
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${adminToken()}`,
       },
-      body: formData
+      body: formData,
     })
       .then((res) => res.json())
       .then((result) => {
         gallery.push(result.data.id);
-        setGallery(gallery)
+        setGallery(gallery);
 
-        galleryImages.push(result.data.image_url)
-        setGalleryImages(galleryImages)
-        setDisable(false)
-        e.target.value = ""
-      })
-  }
-  
+        galleryImages.push(result.data.image_url);
+        setGalleryImages(galleryImages);
+        setDisable(false);
+        e.target.value = "";
+      });
+  };
 
   const deleteImage = (image) => {
-    const newGallerry = galleryImages.filter(gallery => gallery != image)
-    setGalleryImages(newGallerry)
-  }
+    const newGallerry = galleryImages.filter((gallery) => gallery != image);
+    setGalleryImages(newGallerry);
+  };
 
   useEffect(() => {
     fetchCategories();
@@ -400,31 +397,40 @@ const Create = ({ placeholder }) => {
                     )}
                   </div>
                   <h3 className="py-3 border-bottom mb-3">Sizes</h3>
-                  <div  className='mb-3'>
-                    
-                    {sizes && sizes.map(size => {
-                      return (
-                        <div className="form-check-inline ps-2" key={`psize-${size.id}`}>
-                          <input
-                          {
-                            ...register("sizes")
-                          } 
-                          checked={sizesChecked.includes(size.id)}
-                          onChange={(e) => {
-                            if (e.target.checked) {
-                              setSizesChecked([...sizesChecked,size.id])
-                            } else {
-                              setSizesChecked(sizesChecked.filter(sid => size.id != sid))
-                            }
-                          }}
-                          className="form-check-input" type="checkbox" value={size.id} id={`size-${size.id}`}/>
-                          <label className="form-check-label ps-2" htmlFor="{`size-${size.id}`}">
-                            {size.name}
-                          </label>
-                        </div>
-                      )
-                    })}
-                    
+                  <div className="mb-3">
+                    {sizes &&
+                      sizes.map((size) => {
+                        return (
+                          <div
+                            className="form-check-inline ps-2"
+                            key={`psize-${size.id}`}
+                          >
+                            <input
+                              {...register("sizes")}
+                              checked={sizesChecked.includes(size.id)}
+                              onChange={(e) => {
+                                if (e.target.checked) {
+                                  setSizesChecked([...sizesChecked, size.id]);
+                                } else {
+                                  setSizesChecked(
+                                    sizesChecked.filter((sid) => size.id != sid)
+                                  );
+                                }
+                              }}
+                              className="form-check-input"
+                              type="checkbox"
+                              value={size.id}
+                              id={`size-${size.id}`}
+                            />
+                            <label
+                              className="form-check-label ps-2"
+                              htmlFor="{`size-${size.id}`}"
+                            >
+                              {size.name}
+                            </label>
+                          </div>
+                        );
+                      })}
                   </div>
                   <h3 className="py-3 border-bottom mb-3">Gallery</h3>
                   <div className="mb-3">
@@ -432,28 +438,32 @@ const Create = ({ placeholder }) => {
                       Image
                     </label>
                     <input
-                    onChange={handleFile} 
-                    type="file" className="form-control" />
+                      onChange={handleFile}
+                      type="file"
+                      className="form-control"
+                    />
                   </div>
 
                   <div className="mb-3">
                     <div className="row">
-                      {
-                        galleryImages && galleryImages.map((image, index) => {
+                      {galleryImages &&
+                        galleryImages.map((image, index) => {
                           return (
                             <div className="col-md-3" key={`image-${index}`}>
                               <div className="card shadow">
                                 <img src={image} alt="" className="w-100" />
                               </div>
-                              <button className="btn btn-danger" onClick={() => deleteImage(image)}>Delete</button>
+                              <button
+                                className="btn btn-danger"
+                                onClick={() => deleteImage(image)}
+                              >
+                                Delete
+                              </button>
                             </div>
-                          )
-                        })
-                      }
-                      
+                          );
+                        })}
                     </div>
                   </div>
-
                 </div>
               </div>
               <button
