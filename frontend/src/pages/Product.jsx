@@ -9,9 +9,6 @@ import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
-import ProductImgOne from "../assets/images/men/five.jpg";
-import ProductImgTwo from "../assets/images/men/six.jpg";
-import ProductImgThree from "../assets/images/men/seven.jpg";
 import Layout from "../components/common/Layout";
 import { apiUrl } from "../components/common/http";
 import { CartContext } from "../context/Cart";
@@ -25,46 +22,45 @@ const Product = () => {
   const [productSizes, setProductSizes] = useState([]);
   const [sizeSelected, setSizeSelected] = useState(null);
   const params = useParams();
-  const { addToCart } = useContext(CartContext)
+  const { addToCart } = useContext(CartContext);
 
   const fetchProduct = () => {
     fetch(`${apiUrl}/get-product/${params.id}`, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-type' : 'application/json',
-        'Accept' : 'application/json',
-      }
+        "Content-type": "application/json",
+        Accept: "application/json",
+      },
     })
-    .then(res => res.json())
-    .then(result => {
-      if(result.status == 200) {
-        setProduct(result.data)
-        setProductImages(result.data.product_images)
-        setProductSizes(result.data.product_sizes)
-      } else {
-        console.log("Something went wrong");
-      }
-    })
-  }
+      .then((res) => res.json())
+      .then((result) => {
+        if (result.status == 200) {
+          setProduct(result.data);
+          setProductImages(result.data.product_images);
+          setProductSizes(result.data.product_sizes);
+        } else {
+          console.log("Something went wrong");
+        }
+      });
+  };
 
   const handleAddToCart = () => {
-    if(productSizes.length > 0){
-      if(sizeSelected == null){
-        toast.error("Please select a size")
+    if (productSizes.length > 0) {
+      if (sizeSelected == null) {
+        toast.error("Please select a size");
       } else {
-        addToCart(product, sizeSelected)
-        toast.success("Product successfully added to cart")
+        addToCart(product, sizeSelected);
+        toast.success("Product successfully added to cart");
       }
     } else {
-      addToCart(product,null)
-      toast.success("Product successfully added to cart")
+      addToCart(product, null);
+      toast.success("Product successfully added to cart");
     }
-   
-  }
+  };
 
   useEffect(() => {
-    fetchProduct()
-  }, [])
+    fetchProduct();
+  }, []);
   return (
     <Layout>
       <div className="container-md product-detail">
@@ -104,8 +100,8 @@ const Product = () => {
                   modules={[FreeMode, Navigation, Thumbs]}
                   className="my-swiper mt-2"
                 >
-                  {
-                    productImages && productImages.map(product_image => {
+                  {productImages &&
+                    productImages.map((product_image) => {
                       return (
                         <SwiperSlide key={`image-sm-${product_image.id}`}>
                           <div className="content">
@@ -117,9 +113,8 @@ const Product = () => {
                             />
                           </div>
                         </SwiperSlide>
-                      )
-                    })
-                  }
+                      );
+                    })}
                 </Swiper>
               </div>
               <div className="col-10">
@@ -135,8 +130,8 @@ const Product = () => {
                   modules={[FreeMode, Navigation, Thumbs]}
                   className="my-swiper2"
                 >
-                  {
-                    productImages && productImages.map(product_image => {
+                  {productImages &&
+                    productImages.map((product_image) => {
                       return (
                         <SwiperSlide key={`image-${product_image.id}`}>
                           <div className="content">
@@ -147,10 +142,8 @@ const Product = () => {
                             />
                           </div>
                         </SwiperSlide>
-                      )
-                    })
-                  }
-                  
+                      );
+                    })}
                 </Swiper>
               </div>
             </div>
@@ -165,34 +158,38 @@ const Product = () => {
 
             <div className="price h3 py-3">
               ${product.price} &nbsp;
-              {
-                product.compare_price && <span className="text-decoration-line-through">${product.compare_price}</span>
-              }
+              {product.compare_price && (
+                <span className="text-decoration-line-through">
+                  ${product.compare_price}
+                </span>
+              )}
             </div>
 
-            <div>
-              { product.short_description }
-            </div>
+            <div>{product.short_description}</div>
             <div className="pt-3">
               <strong>Select Size</strong>
               <div className="size pt-2">
-                {
-                  productSizes && productSizes.map(product_size => {
-                    return(
+                {productSizes &&
+                  productSizes.map((product_size) => {
+                    return (
                       <button
-                      key={`p-size-${product_size.id}`}
-                      onClick={() => setSizeSelected(product_size.size.name)} 
-                      className={`btn btn-size me-2 ${sizeSelected == product_size.size.name ? 'active' : ''}`}
-                      >{product_size.size.name}</button>
-                    )
-                  })
-                }
+                        key={`p-size-${product_size.id}`}
+                        onClick={() => setSizeSelected(product_size.size.name)}
+                        className={`btn btn-size me-2 ${
+                          sizeSelected == product_size.size.name ? "active" : ""
+                        }`}
+                      >
+                        {product_size.size.name}
+                      </button>
+                    );
+                  })}
               </div>
 
               <div className="add-to-cart my-4">
                 <button
-                onClick={() => handleAddToCart()} 
-                className="btn btn-primary text-uppercase">
+                  onClick={() => handleAddToCart()}
+                  className="btn btn-primary text-uppercase"
+                >
                   Add to cart
                 </button>
               </div>
@@ -213,9 +210,9 @@ const Product = () => {
               className="mb-3"
             >
               <Tab eventKey="description" title="Description">
-                <div dangerouslySetInnerHTML={{__html:product.description}}>
-
-                </div>
+                <div
+                  dangerouslySetInnerHTML={{ __html: product.description }}
+                ></div>
               </Tab>
               <Tab eventKey="reviews" title="Reviews (10)">
                 Reviews Area
