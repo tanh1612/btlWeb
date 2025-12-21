@@ -9,7 +9,6 @@ use App\Http\Controllers\admin\TempImageController;
 use App\Http\Controllers\front\AccountController;
 use App\Http\Controllers\front\OrderController;
 use App\Http\Controllers\front\ProductController as FrontProductController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/admin/login', [AuthController::class, 'authenticate']);
@@ -24,6 +23,7 @@ Route::post('login', [AccountController::class, 'authenticate']);
 
 Route::group(['middleware' => ['auth:sanctum', 'checkUserRole']], function () {
     Route::post('save-order', [OrderController::class, 'saveOrder']);
+    Route::get('get-order-detail/{id}', [AccountController::class, 'getOrderDetail']);
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'checkAdminRole']], function () {
