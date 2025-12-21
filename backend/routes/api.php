@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/admin/login', [AuthController::class, 'authenticate']);
 Route::get('get-latest-products', [FrontProductController::class, 'latestProducts']);
-Route::get('get-featured-products', [FrontProductController::class, 'latestProducts']);
+Route::get('get-featured-products', [FrontProductController::class, 'featuredProducts']);
 Route::get('get-categories', [FrontProductController::class, 'getCategories']);
 Route::get('get-brands', [FrontProductController::class, 'getBrands']);
 Route::get('get-products', [FrontProductController::class, 'getProducts']);
@@ -26,6 +26,8 @@ Route::group(['middleware' => ['auth:sanctum', 'checkUserRole']], function () {
     Route::post('save-order', [OrderController::class, 'saveOrder']);
     Route::get('get-order-detail/{id}', [AccountController::class, 'getOrderDetails']);
     Route::get('get-orders', [AccountController::class, 'getOrders']);
+    Route::post('update-profile', [AccountController::class, 'updateProfile']);
+    Route::get('get-profile-details', [AccountController::class, 'getAccountDetails']);
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'checkAdminRole']], function () {
