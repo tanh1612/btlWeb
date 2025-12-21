@@ -25,6 +25,8 @@ import {default as UserLogin} from "./pages/Login";
 import Profile from "./pages/Profile";
 import { RequireAuth } from "./pages/RequireAuth";
 import Confirmation from "./pages/Confirmation";
+import ShowOrders from "./components/admin/orders/ShowOrders";
+import OrderDetail from "./components/admin/orders/OrderDetail";
 
 function App() {
   return (
@@ -134,6 +136,20 @@ function App() {
             element={
               <AdminRequireAuth>
                 <EditProduct />
+              </AdminRequireAuth>
+            }/>
+            <Route
+            path="/admin/orders"
+            element={
+              <AdminRequireAuth>
+                <ShowOrders />
+              </AdminRequireAuth>
+            }/>
+            <Route
+            path="/admin/orders/:id"
+            element={
+              <AdminRequireAuth>
+                <OrderDetail />
               </AdminRequireAuth>
             }/>
         </Routes>

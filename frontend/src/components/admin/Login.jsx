@@ -47,7 +47,7 @@ const Login = () => {
   return (
     <>
       <Layout>
-        <div className="containerd-flex justify-content-center py-5">
+        <div className="container d-flex justify-content-center py-5">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="card shadow border-0 login">
               <div className="card-body p-4">
