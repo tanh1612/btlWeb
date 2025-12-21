@@ -1,9 +1,11 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+import { apiUrl, userToken } from "../components/common/http";
 
 export const CartContext = createContext();
 
 export const CartProvider = ({children}) => {
     const [cartData, setCartData] = useState(JSON.parse(localStorage.getItem('cart')) || [])
+    const [shippingCost, setShippingCost] = useState(0);
 
     const addToCart = (product, size=null) => {
         let updatedCart = [ ...cartData];
@@ -77,7 +79,13 @@ export const CartProvider = ({children}) => {
         localStorage.setItem('cart',JSON.stringify(updatedCart))
     }
     const shipping = () => {
-        return 0;
+        shippingCost
+        let shippingAmount = 0;
+        cartData.map(item => {
+            shippingAmount+= item.qty * shippingCost;
+        })
+
+        return shippingAmount;
     }
     const subTotal = () => {
         let subtotal = 0;
@@ -115,6 +123,27 @@ export const CartProvider = ({children}) => {
         })
         return qty;
     }
+
+    useEffect(() => {
+        fetch(`${apiUrl}/get-shipping-front`,{
+            method: 'GET',
+            headers: {
+                'Content-type' : 'application/json',
+                'Accept' : 'application/json',
+                'Authorization' : `Bearer ${userToken()}`
+            }
+        })
+        .then(res => res.json())
+        .then(result => {
+            if (result.status == 200){
+                setShippingCost(result.data.shipping_charge);
+            } else{
+                setShippingCost(0);
+                console.log("Something went wrong")
+            }
+
+        })
+    });
 
     return (
         <CartContext.Provider value={{ addToCart, cartData, grandTotal, subTotal, shipping, updateCartItem, deleteCartItem, getQty}}>
