@@ -63,8 +63,9 @@ const Login = () => {
                     pattern: {
                       value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                       message: "Invalid email address",
-                    },
-                  })}
+                      },
+                    })
+                  }
                   type="text"
                   className={`form-control ${errors.email && "is-invalid"}`}
                   placeholder="Email"

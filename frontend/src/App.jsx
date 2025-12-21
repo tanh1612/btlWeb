@@ -22,7 +22,7 @@ import {default as CreateProduct} from "./components/admin/product/Create";
 import {default as EditProduct}  from "./components/admin/product/Edit";
 import Register from "./pages/Register";
 import {default as UserLogin} from "./pages/Login";
-import Profile from "./pages/Profile";
+import Profile from "./components/front/Profile";
 import { RequireAuth } from "./pages/RequireAuth";
 import Confirmation from "./pages/Confirmation";
 import ShowOrders from "./components/admin/orders/ShowOrders";
