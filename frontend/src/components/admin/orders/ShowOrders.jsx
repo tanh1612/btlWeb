@@ -13,7 +13,7 @@ const ShowOrders = () => {
 
     const fetchOrders = async () => {
         setLoader(true)
-        const res = fetch(`${apiUrl}/orders`,{
+        const res = await fetch(`${apiUrl}/orders`,{
             method: 'GET',
             headers: {
                 'Content-type' : 'application/json',

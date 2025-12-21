@@ -14,7 +14,7 @@ const Show = () => {
 
     const fetchCategories = async () => {
         setLoader(true)
-        const res = fetch(`${apiUrl}/categories`,{
+        const res = await fetch(`${apiUrl}/categories`,{
             method: 'GET',
             headers: {
                 'Content-type' : 'application/json',
