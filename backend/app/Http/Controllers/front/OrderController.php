@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
+use Stripe\PaymentIntent;
+use Stripe\Stripe;
 
 class OrderController extends Controller
 {
@@ -26,7 +28,7 @@ class OrderController extends Controller
             $order->shipping = $request->shipping;
             $order->payment_status = $request->payment_status;
             $order->status = $request->status;
-            $order->user_id = $request->user_id;
+            $order->user_id = $request->user()->id;
             $order->save();
 
             foreach ($request->cart as $item) {
@@ -37,18 +39,45 @@ class OrderController extends Controller
                 $orderItem->qty = $item['qty'];
                 $orderItem->product_id = $item['product_id'];
                 $orderItem->size = $item['size'];
-                $orderItem->name = $item['name'];
+                $orderItem->name = $item['title'];
                 $orderItem->save();
             }
             return response()->json([
                 'status' => 200,
-                'message' => 'You have successfully placed your order.'
+                'message' => 'You have successfully placed your order.',
+                'id' => $order->id
             ], 200);
         } else {
             return response()->json([
                 'status' => 400,
                 'message' => 'You cart is empty.'
             ], 400);
+        }
+    }
+
+    public function createPaymentIntent(Request $request)
+    {
+        try {
+            if ($request->amount > 0) {
+                Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
+                $paymentIntent = PaymentIntent::create([
+                    'amount' => $request->amount,
+                    'currency' => 'USD',
+                    'payment_method_types' => ['card']
+                ]);
+                $clientSecret = $paymentIntent->client_secret;
+                return response()->json([
+                    'status' => 200,
+                    'clientSecret' => $clientSecret
+                ], 200);
+            } else {
+                return response()->json([
+                    'status' => 400,
+                    'message' => 'Amount must be greater than 0.'
+                ], 400);
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
         }
     }
 }

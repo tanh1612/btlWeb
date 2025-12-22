@@ -86,6 +86,11 @@ class ProductController extends Controller
                 $img->coverDown(400, 460);
                 $img->save(public_path('uploads/products/small/' . $imageName));
 
+                $productImage = new ProductImage();
+                $productImage->product_id = $product->id;
+                $productImage->image = $imageName;
+                $productImage->save();
+
                 if ($key == 0) {
                     $product->image = $imageName;
                     $product->save();

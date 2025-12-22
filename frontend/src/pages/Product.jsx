@@ -85,23 +85,23 @@ const Product = () => {
           <div className="col-md-5">
             <div className="row">
               <div className="col-2">
-                <Swiper
-                  style={{
-                    "--swiper-navigation-color": "#000",
-                    "--swiper-pagination-color": "#000",
-                  }}
-                  onSwiper={setThumbsSwiper}
-                  loop={true}
-                  direction={`vertical`}
-                  spaceBetween={10}
-                  slidesPerView={6}
-                  freeMode={true}
-                  watchSlidesProgress={true}
-                  modules={[FreeMode, Navigation, Thumbs]}
-                  className="my-swiper mt-2"
-                >
-                  {productImages &&
-                    productImages.map((product_image) => {
+                {productImages && productImages.length > 0 && (
+                  <Swiper
+                    style={{
+                      "--swiper-navigation-color": "#000",
+                      "--swiper-pagination-color": "#000",
+                    }}
+                    onSwiper={setThumbsSwiper}
+                    loop={true}
+                    direction={`vertical`}
+                    spaceBetween={10}
+                    slidesPerView={6}
+                    freeMode={true}
+                    watchSlidesProgress={true}
+                    modules={[FreeMode, Navigation, Thumbs]}
+                    className="my-swiper mt-2"
+                  >
+                    {productImages.map((product_image) => {
                       return (
                         <SwiperSlide key={`image-sm-${product_image.id}`}>
                           <div className="content">
@@ -115,23 +115,24 @@ const Product = () => {
                         </SwiperSlide>
                       );
                     })}
-                </Swiper>
+                  </Swiper>
+                )}
               </div>
               <div className="col-10">
-                <Swiper
-                  style={{
-                    "--swiper-navigation-color": "#000",
-                    "--swiper-pagination-color": "#000",
-                  }}
-                  loop={true}
-                  spaceBetween={0}
-                  navigation={true}
-                  thumbs={thumbsSwiper ? { swiper: thumbsSwiper } : undefined}
-                  modules={[FreeMode, Navigation, Thumbs]}
-                  className="my-swiper2"
-                >
-                  {productImages &&
-                    productImages.map((product_image) => {
+                {productImages && productImages.length > 0 && (
+                  <Swiper
+                    style={{
+                      "--swiper-navigation-color": "#000",
+                      "--swiper-pagination-color": "#000",
+                    }}
+                    loop={true}
+                    spaceBetween={0}
+                    navigation={true}
+                    thumbs={thumbsSwiper ? { swiper: thumbsSwiper } : undefined}
+                    modules={[FreeMode, Navigation, Thumbs]}
+                    className="my-swiper2"
+                  >
+                    {productImages.map((product_image) => {
                       return (
                         <SwiperSlide key={`image-${product_image.id}`}>
                           <div className="content">
@@ -144,7 +145,8 @@ const Product = () => {
                         </SwiperSlide>
                       );
                     })}
-                </Swiper>
+                  </Swiper>
+                )}
               </div>
             </div>
           </div>
